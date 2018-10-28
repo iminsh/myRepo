@@ -18,13 +18,16 @@ count = 0
 while not overMsg.is_displayed():
     tiles = dr.find_elements_by_css_selector('.tile')
 
-# build the model of tiles
-    matrix = [[0 for col in range(4)] for row in range(4)]
+    # build the model of tiles
+    # matrix = [[0 for col in range(4)] for row in range(4)]
+    # or
+    matrix = [[0] * 4 for row in range(4)]
+    
     for tile in tiles:
         # tileclass example:
         # 'tile tile-2 tile-position-1-2 tile-new'
         tileclass = tile.get_attribute('class')
-        print(tileclass, end = '  >>  ')
+#        print(tileclass, end = '  >>  ')
 
         # tileclasses example:
         # ['tile', 'tile-2', 'tile-position-1-2', 'tile-new']
@@ -42,17 +45,17 @@ while not overMsg.is_displayed():
         col = int(position[2])
         row = int(position[3])
         matrix[row-1][col-1] = number
-        print('column=', col,' row=', row,' is', number)
+#        print('column=', col,' row=', row,' is', number)
         
-# pause for observation
+# print the matrix and pause for observation
     print(matrix[0])
     print(matrix[1])
     print(matrix[2])
     print(matrix[3])
-    
     input('Press any key to continue ...')
+
 # TODO: key determination.
-# at the moment, simply change in sequence: UP-RIGHT-DOWN-LEFT
+# at the moment, simply change key in sequence: UP-RIGHT-DOWN-LEFT
     if key == Keys.UP:
         key = Keys.RIGHT
     elif key == Keys.RIGHT:
