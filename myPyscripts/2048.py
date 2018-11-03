@@ -1,14 +1,14 @@
 #! python3
 
+# game on webpage: 'https://gabrielecirulli.github.io/2048/'
+# play the game automatically by the program, with very simple strategy
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import time
 
 dr = webdriver.Chrome()
 dr.get('https://gabrielecirulli.github.io/2048/')
 #dr.maximize_window()
-
-#time.sleep(5)
 
 htmlElem = dr.find_element_by_css_selector('html')
 overMsg = dr.find_element_by_css_selector('.game-message')
@@ -67,6 +67,5 @@ while not overMsg.is_displayed():
 
     htmlElem.send_keys(key)
     count = count + 1
-
 
 #dr.quit()
