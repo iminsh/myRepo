@@ -30,7 +30,7 @@ response = requests.get(url)
 response.raise_for_status()
 
 weather_all = json.loads(response.text)
-print('cnt: {}'.format(weather_all['cnt']))
+# print('cnt: {}'.format(weather_all['cnt']))
 weather_list = weather_all['list']
 
 temp = []
@@ -48,7 +48,7 @@ for data in weather_list:
     # loal hour
     local_datetime = timestamp_to_local_datetime(
         data['dt'])
-    ticks.append(str(local_datetime.hour))
+    ticks.append(local_datetime.strftime('%m-%d %H:%M'))
 
 #    print(data['dt_txt'])
 
@@ -61,8 +61,16 @@ dic['x-tick'] = ticks
 
 dfs = pd.DataFrame(dic)
 
-dfs.plot(figsize=(15,8))
-plt.xticks(np.arange(len(dfs['x-tick'])), dfs['x-tick'])
-plt.xlim(0, len(dfs['x-tick']))
-plt.xlabel('Hour')
+dfs.plot(marker='o', figsize=(15,8))
+
+# x-ticks
+#plt.xticks(np.arange(len(dfs['x-tick'])), dfs['x-tick'])
+loc = np.arange(0, len(dfs), 5)
+if (len(dfs)-1) % 5 != 0:
+    loc = np.append(loc, len(dfs)-1) # add the last tick
+plt.xticks(loc, dfs['x-tick'].iloc[loc])
+
+plt.xlim(0, len(dfs)-1)
+plt.xlabel('Date time')
 plt.show()
+
